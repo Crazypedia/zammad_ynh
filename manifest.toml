@@ -1,0 +1,48 @@
+packaging_format = 2
+id = "zammad"
+name = "Zammad"
+description.en = "Web-based helpdesk / ticketing system"
+version = "6.5.1~ynh1"
+maintainers = ["your-handle"]
+
+[upstream]
+license = "AGPL-3.0"
+website = "https://zammad.org"
+code = "https://github.com/zammad/zammad"
+admindoc = "https://docs.zammad.org"
+
+[integration]
+yunohost = ">= 11.1"
+helpers_version = "2.1"
+architectures = ["amd64"]
+multi_instance = false
+ldap = false
+sso = false
+# conservative minima — real usage will be higher if Elasticsearch runs locally
+disk = "3G"
+ram.build = "256M"
+ram.runtime = "1G"
+
+[install]
+  [install.domain]
+  type = "domain"
+
+  # Zammad expects a clean root. Force "/" (no subpath installs for v1)
+  [install.path]
+  type = "path"
+  default = "/"
+  help.en = "Subpath installs are discouraged here; use a dedicated subdomain like support.example.tld and keep path=/"
+
+  [install.init_main_permission]
+  type = "group"
+  default = "all_users"  # change to "visitors" if you want it public by default
+
+  [install.use_elasticsearch]
+  ask.en = "Connect to an Elasticsearch node? (Recommended; external node preferred)"
+  type = "boolean"
+  default = false
+  help.en = "If disabled, search works but is limited and slower. If enabled, this draft currently expects an external ES URL configured manually after install (see README)."
+
+[resources]
+  [resources.permissions]
+  main.url = "/"
