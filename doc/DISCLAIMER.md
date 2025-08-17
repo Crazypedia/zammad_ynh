@@ -1,12 +1,8 @@
-* Any known limitations, constrains or stuff not working, such as (but not limited to):
-    * requiring a full dedicated domain ?
-    * architectures not supported ?
-    * not-working single-sign on or LDAP integration ?
-    * the app requires an important amount of RAM / disk / .. to install or to work properly
-    * etc...
+### Heads-up / limitations in this draft
 
-* Other infos that people should be aware of, such as:
-    * any specific step to perform after installing (such as manually finishing the install, specific admin credentials, ...)
-    * how to configure / administrate the application if it ain't obvious
-    * upgrade process / specificities / things to be aware of ?
-    * security considerations ?
+- **Single instance** only for now. Upstream services bind fixed local ports (3000/6042). Multi-instance would require per-instance port remapping & service templating.
+- **Subdomain-only**: websockets over subpaths are finicky; this draft forces path=/.
+- **Elasticsearch** is **optional** but strongly recommended for performance and advanced features. This draft suggests using an *external* ES ≥7.8,<9. Local ES on the same host is possible but heavy (RAM). OpenSearch is currently not wired.
+- **SSO/LDAP**: not integrated yet. Use Zammad’s own user DB for first run.
+- **Architectures**: amd64 only (per upstream packages). ARM64 would require Docker-based packaging instead.
+- **Email**: you still need to configure inbound/outbound email channels in Zammad after install.
